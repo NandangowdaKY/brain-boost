@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost — Brain Health & Memory Training</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Minimalist Geometric Sans & Crisp Monospace Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for Clean Minimalist Line Art -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        canvas: '#FAFAFA',
+                        surface: '#FFFFFF',
+                        ink: '#111827',
+                        slate: '#6B7280',
+                        muted: '#9CA3AF',
+                        hairline: '#E5E7EB',
+                        subtle: '#F3F4F6',
+                        accent: '#2563EB',
+                        accentSoft: '#EFF6FF'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #111827;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Minimalist Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+
+        .game-cell {
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-canvas text-ink selection:bg-accent selection:text-white">
+
+    <!-- =====================================================================
+         TOP MINIMAL NAVIGATION BAR (4 STRICT SECTIONS)
+         ===================================================================== -->
+    <header class="sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-hairline">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand Identity -->
+            <a href="#intro" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 rounded-md border border-ink bg-ink text-white flex items-center justify-center font-mono text-xs font-semibold tracking-tighter group-hover:bg-accent group-hover:border-accent transition-colors">
+                    BB
+                </div>
+                <div>
+                    <span class="font-semibold tracking-tight text-sm block leading-none">BrainBoost</span>
+                    <span class="font-mono text-[10px] text-slate tracking-wider uppercase block mt-1">Brain & Memory Lab</span>
+                </div>
+            </a>
+
+            <!-- Strict 4-Section Navigation Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate">
+                <a href="#intro" class="hover:text-ink transition-colors">01. Introduction</a>
+                <a href="#games" class="hover:text-ink transition-colors">02. Memory Games (7)</a>
+                <a href="#performance" class="hover:text-ink transition-colors">03. Performance Table</a>
+                <a href="#team" class="hover:text-ink transition-colors">04. Team Info</a>
+            </nav>
+
+            <!-- Live Session Telemetry Pill -->
+            <div class="flex items-center gap-3">
+                <div class="px-3 py-1.5 rounded-md bg-subtle border border-hairline flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-accent"></span>
+                    <span class="text-xs text-slate font-medium">Sessions:</span>
+                    <span id="nav-sessions-count" class="font-mono text-xs font-semibold text-ink">0</span>
+                </div>
+                <a href="#games" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-ink text-white text-xs font-medium hover:bg-accent transition-colors">
+                    <span>Play Games</span>
+                    <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
+
+        <!-- =====================================================================
+             SECTION 01: SIMPLE INTRODUCTION (#intro)
+             ===================================================================== -->
+        <section id="intro" class="pt-12 pb-16 border-b border-hairline">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-hairline">
+                <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-slate">
+                    <span>Section 01</span>
+                    <span>/</span>
+                    <span class="text-accent font-medium">Introduction to BrainBoost</span>
+                </div>
+                <div class="font-mono text-xs text-slate">
+                    Biology × Computer Science Mini-Project
+                </div>
+            </div>
+
+            <!-- Simple Everyday-Language Introduction -->
+            <div class="pt-10 max-w-3xl space-y-5">
+                <h1 class="text-3xl sm:text-5xl font-semibold tracking-tight text-ink leading-[1.12]">
+                    Train Your Brain. Sharpen Your Memory.
+                </h1>
+                <p class="text-base sm:text-lg text-slate leading-relaxed font-normal">
+                    Your brain works like a muscle. Every time you learn, focus, or remember something, tiny nerve cells called <strong class="text-ink font-medium">neurons</strong> send electrical and chemical signals to each other. The more you practice recalling information, the stronger these pathways become. <strong class="text-ink font-medium">BrainBoost</strong> combines Biology and Computer Science to explain how memory works in simple terms and gives you <strong class="text-ink font-medium">7 quick daily exercises</strong> to test and improve your focus, recall, and reaction speed.
+                </p>
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <a href="#games" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-ink text-white text-sm font-medium hover:bg-accent transition-colors">
+                        <span>Start the 7 Brain Games</span>
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#performance" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-surface border border-hairline text-ink text-sm font-medium hover:border-ink transition-colors">
+                        <span>View Performance Table</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3 Simple Summary Cards Without Heavy Jargon -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <!-- Card 1 -->
+                <div class="bg-surface border border-hairline rounded-lg p-6">
+                    <div class="w-9 h-9 rounded-md bg-accentSoft border border-accent/20 text-accent flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                    </div>
+                    <div class="font-mono text-xs text-accent font-semibold uppercase">01 / Neural Signals</div>
+                    <h2 class="text-lg font-semibold text-ink mt-1">How Neurons Talk</h2>
+                    <p class="text-sm text-slate mt-2 leading-relaxed">
+                        Neurons pass tiny electrical sparks and chemical messages across small gaps called synapses to store what you see, read, and learn every day.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-surface border border-hairline rounded-lg p-6">
+                    <div class="w-9 h-9 rounded-md bg-accentSoft border border-accent/20 text-accent flex items-center justify-center mb-4">
+                        <i data-lucide="layers" class="w-4 h-4"></i>
+                    </div>
+                    <div class="font-mono text-xs text-accent font-semibold uppercase">02 / 3-Step Process</div>
+                    <h2 class="text-lg font-semibold text-ink mt-1">How Memory Forms</h2>
+                    <p class="text-sm text-slate mt-2 leading-relaxed">
+                        Memory happens in three simple steps—paying close attention (<strong class="text-ink font-medium">Encoding</strong>), saving it inside the brain (<strong class="text-ink font-medium">Storage</strong>), and bringing it back when needed (<strong class="text-ink font-medium">Recall</strong>).
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-surface border border-hairline rounded-lg p-6">
+                    <div class="w-9 h-9 rounded-md bg-accentSoft border border-accent/20 text-accent flex items-center justify-center mb-4">
+                        <i data-lucide="activity" class="w-4 h-4"></i>
+                    </div>
+                    <div class="font-mono text-xs text-accent font-semibold uppercase">03 / Daily Practice</div>
+                    <h2 class="text-lg font-semibold text-ink mt-1">Why Brain Games Help</h2>
+                    <p class="text-sm text-slate mt-2 leading-relaxed">
+                        Challenging your brain with numbers, patterns, words, and speed exercises keeps your neural pathways active and sharpens daily concentration.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 02: INTERACTIVE MEMORY TRAINING ARENA — ALL 7 GAMES (#games)
+             ===================================================================== -->
+        <section id="games" class="py-16 border-b border-hairline">
+            <div class="pb-6 border-b border-hairline">
+                <span class="font-mono text-xs uppercase tracking-widest text-slate block">Section 02 / Interactive Memory Training Arena</span>
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mt-1">
+                    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink">7 Cognitive Brain Exercises</h2>
+                    <p class="text-sm text-slate">Choose any exercise below to test your memory and automatically log your score.</p>
+                </div>
+
+                <!-- 7-Game Responsive Selector Bar -->
+                <div class="flex flex-wrap gap-2 mt-6">
+                    <button onclick="switchGameTab('number')" id="tab-btn-number" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-ink text-white border border-ink transition-all">
+                        01. Number Memory
+                    </button>
+                    <button onclick="switchGameTab('pattern')" id="tab-btn-pattern" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        02. Pattern Matrix
+                    </button>
+                    <button onclick="switchGameTab('cards')" id="tab-btn-cards" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        03. Synapse Card Match
+                    </button>
+                    <button onclick="switchGameTab('words')" id="tab-btn-words" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        04. Word Recall
+                    </button>
+                    <button onclick="switchGameTab('stroop')" id="tab-btn-stroop" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        05. Stroop Color Focus
+                    </button>
+                    <button onclick="switchGameTab('chimp')" id="tab-btn-chimp" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        06. Sequence Chimp Test
+                    </button>
+                    <button onclick="switchGameTab('reaction')" id="tab-btn-reaction" class="game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all">
+                        07. Neural Reaction Speed
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 01: NUMBER MEMORY (Working Memory — Prefrontal Cortex)
+                 =============================================================== -->
+            <div id="game-panel-number" class="game-panel pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 01 / Working Memory</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Number Memory</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Prefrontal Cortex</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                A random number sequence will appear for a few seconds. Memorize the digits, then type the exact number from memory. Each correct round adds one more digit.
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Current Level</span>
+                                    <span id="num-level-ui" class="font-mono text-lg font-semibold text-ink">Level 1 (3d)</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Best Span</span>
+                                    <span id="num-best-ui" class="font-mono text-lg font-semibold text-accent">0 digits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-10 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="num-status" class="font-mono text-xs text-slate uppercase">Ready to Start</span>
+                            <span class="font-mono text-xs text-slate">Press Enter to Verify</span>
+                        </div>
+
+                        <div class="my-auto py-8 text-center">
+                            <div id="num-box" class="font-mono text-4xl sm:text-5xl font-semibold tracking-[0.2em] text-ink py-6 px-4 rounded-md bg-canvas border border-hairline select-none">
+                                Press Start
+                            </div>
+
+                            <div id="num-input-wrap" class="hidden mt-5 max-w-sm mx-auto flex gap-2">
+                                <input id="num-input" type="text" inputmode="numeric" autocomplete="off" placeholder="Type memorized digits..."
+                                    class="flex-1 text-center font-mono text-xl py-2.5 px-4 rounded-md bg-canvas border border-hairline focus:border-accent focus:outline-none" />
+                                <button onclick="verifyNumberGame()" class="px-5 py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                    Verify
+                                </button>
+                            </div>
+
+                            <div class="mt-5">
+                                <button id="num-start-btn" onclick="startNumberGame()" class="px-6 py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                    Start Number Sequence
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span id="num-feedback">Short-term digit span exercise</span>
+                            <span>Prefrontal Cortex</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 02: PATTERN MATRIX (Spatial Recall — Parietal Lobe)
+                 =============================================================== -->
+            <div id="game-panel-pattern" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 02 / Spatial Recall</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Pattern Matrix</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Parietal Lobe & Hippocampus</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                Watch which tiles light up blue on the 4×4 grid. Once they hide, click the exact same tiles from memory to advance to the next level.
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Level</span>
+                                    <span id="pat-level-ui" class="font-mono text-lg font-semibold text-ink">1 (3 Tiles)</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Best Level</span>
+                                    <span id="pat-best-ui" class="font-mono text-lg font-semibold text-accent">Level 0</span>
+                                </div>
+                            </div>
+                            <button onclick="startPatternGame()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Start Pattern Matrix
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-10 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="pat-status" class="font-mono text-xs text-slate uppercase">Click "Start Pattern Matrix" to begin</span>
+                            <span class="font-mono text-xs text-slate">4 × 4 Spatial Grid</span>
+                        </div>
+
+                        <div class="my-6 flex items-center justify-center">
+                            <div id="pat-grid" class="grid grid-cols-4 gap-2.5 w-full max-w-[270px] aspect-square"></div>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Visual-spatial coordinate memory</span>
+                            <span>Parietal Lobe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 03: SYNAPSE CARD MATCH (Associative Memory — Temporal Lobe)
+                 =============================================================== -->
+            <div id="game-panel-cards" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 03 / Associative Memory</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Synapse Card Match</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Temporal Lobe</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                Flip two cards at a time on the 4×3 board to match 6 brain parts with their plain-English jobs in as few moves as possible.
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Moves Used</span>
+                                    <span id="card-moves-ui" class="font-mono text-lg font-semibold text-ink">0</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Pairs Found</span>
+                                    <span id="card-pairs-ui" class="font-mono text-lg font-semibold text-accent">0 / 6</span>
+                                </div>
+                            </div>
+                            <button onclick="initCardGame()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Shuffle & Reset Deck
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-8 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="card-status" class="font-mono text-xs text-slate uppercase">Match each brain term with its job</span>
+                            <span class="font-mono text-xs text-slate">6 Concept Pairs (12 Cards)</span>
+                        </div>
+
+                        <div id="card-grid" class="my-6 grid grid-cols-3 sm:grid-cols-4 gap-3 max-w-lg mx-auto w-full"></div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Concept association & location recall</span>
+                            <span>Temporal Lobe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 04 [NEW]: WORD RECALL (Verbal Episodic Memory — Left Temporal)
+                 =============================================================== -->
+            <div id="game-panel-words" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 04 / Verbal Memory</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Word Recall</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Left Temporal Lobe</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                Study 6 simple everyday words for 5 seconds. Then pick all 6 original words from a mixed grid of 12 words without clicking decoys.
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Found</span>
+                                    <span id="word-found-ui" class="font-mono text-lg font-semibold text-ink">0 / 6</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Best Score</span>
+                                    <span id="word-best-ui" class="font-mono text-lg font-semibold text-accent">0 / 6</span>
+                                </div>
+                            </div>
+                            <button onclick="startWordGame()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Start Word Recall
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-8 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="word-status" class="font-mono text-xs text-slate uppercase">Click "Start Word Recall" to study list</span>
+                            <span class="font-mono text-xs text-slate">6 Target Words / 6 Distractors</span>
+                        </div>
+
+                        <div id="word-stage" class="my-auto py-6">
+                            <div class="text-center text-sm text-slate font-mono">Press Start to display your 6 target words.</div>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Verbal encoding & recognition memory</span>
+                            <span>Left Temporal Lobe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 05 [NEW]: STROOP COLOR FOCUS (Selective Attention — Frontal)
+                 =============================================================== -->
+            <div id="game-panel-stroop" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 05 / Selective Attention</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Stroop Color Focus</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Anterior Cingulate & Frontal Lobe</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                A color word (like "RED") will appear painted in a <strong>different ink color</strong> (like Blue). Click the button for the <strong>INK COLOR</strong>, ignoring what the word reads! (10 fast rounds)
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Progress</span>
+                                    <span id="stroop-round-ui" class="font-mono text-lg font-semibold text-ink">0 / 10</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Correct</span>
+                                    <span id="stroop-score-ui" class="font-mono text-lg font-semibold text-accent">0 / 10</span>
+                                </div>
+                            </div>
+                            <button onclick="startStroopGame()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Start 10-Round Stroop Test
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-10 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="stroop-status" class="font-mono text-xs text-slate uppercase">Rule: Select the INK COLOR, not the written word</span>
+                            <span id="stroop-avg-ui" class="font-mono text-xs text-slate">Avg Speed: -- ms</span>
+                        </div>
+
+                        <div class="my-auto py-8 text-center">
+                            <div id="stroop-word-box" class="font-mono text-4xl sm:text-6xl font-bold tracking-wider py-6 select-none">
+                                READY
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-md mx-auto mt-6">
+                                <button onclick="answerStroop('RED')" class="py-2.5 px-4 rounded-md border border-hairline bg-canvas hover:border-ink font-mono text-xs font-semibold text-ink">
+                                    RED INK
+                                </button>
+                                <button onclick="answerStroop('BLUE')" class="py-2.5 px-4 rounded-md border border-hairline bg-canvas hover:border-ink font-mono text-xs font-semibold text-ink">
+                                    BLUE INK
+                                </button>
+                                <button onclick="answerStroop('GREEN')" class="py-2.5 px-4 rounded-md border border-hairline bg-canvas hover:border-ink font-mono text-xs font-semibold text-ink">
+                                    GREEN INK
+                                </button>
+                                <button onclick="answerStroop('AMBER')" class="py-2.5 px-4 rounded-md border border-hairline bg-canvas hover:border-ink font-mono text-xs font-semibold text-ink">
+                                    AMBER INK
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Impulse inhibition & cognitive flexibility</span>
+                            <span>Anterior Cingulate Cortex</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 06 [NEW]: SEQUENCE CHIMP TEST (Visual Working Memory)
+                 =============================================================== -->
+            <div id="game-panel-chimp" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 06 / Sequential Memory</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Sequence Chimp Test</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Parietal & Prefrontal Cortex</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                Numbers 1 to N appear on the grid. Memorize all their locations first! As soon as you click <strong>1</strong>, the remaining numbers hide behind blank tiles. Click them in order (2, 3, 4...).
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Numbers</span>
+                                    <span id="chimp-count-ui" class="font-mono text-lg font-semibold text-ink">4</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Best Cleared</span>
+                                    <span id="chimp-best-ui" class="font-mono text-lg font-semibold text-accent">0</span>
+                                </div>
+                            </div>
+                            <button onclick="startChimpGame()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Start Sequence Test
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-10 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="chimp-status" class="font-mono text-xs text-slate uppercase">Memorize positions, then click 1 to begin</span>
+                            <span class="font-mono text-xs text-slate">Ascending Order (1 → N)</span>
+                        </div>
+
+                        <div class="my-6 flex items-center justify-center">
+                            <div id="chimp-grid" class="grid grid-cols-4 gap-2.5 w-full max-w-[270px] aspect-square"></div>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Rapid photographic working memory</span>
+                            <span>Parietal & Prefrontal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===============================================================
+                 GAME 07 [NEW]: NEURAL REACTION SPEED (Sensorimotor Reflex)
+                 =============================================================== -->
+            <div id="game-panel-reaction" class="game-panel hidden pt-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4">
+                        <div class="bg-surface border border-hairline rounded-lg p-6">
+                            <span class="font-mono text-xs text-accent uppercase font-semibold">Game 07 / Reflex Speed</span>
+                            <h3 class="text-xl font-semibold text-ink mt-1">Neural Reaction Speed</h3>
+                            <p class="text-xs font-mono text-slate mt-0.5">Target: Motor Cortex & Cerebellum</p>
+                            <p class="text-sm text-slate mt-3 leading-relaxed">
+                                Measures how fast electrical impulses travel from your eyes (Occipital Lobe) to your hand muscles (Motor Cortex). Wait for the box to turn <strong>GREEN</strong>, then click immediately! (3 trials)
+                            </p>
+                            <div class="mt-6 pt-5 border-t border-hairline grid grid-cols-2 gap-3 text-center">
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Trial</span>
+                                    <span id="react-trial-ui" class="font-mono text-lg font-semibold text-ink">0 / 3</span>
+                                </div>
+                                <div class="p-3 rounded bg-canvas border border-hairline">
+                                    <span class="font-mono text-[10px] text-slate uppercase block">Best Avg</span>
+                                    <span id="react-best-ui" class="font-mono text-lg font-semibold text-accent">-- ms</span>
+                                </div>
+                            </div>
+                            <button onclick="startReactionTest()" class="mt-5 w-full py-2.5 rounded-md bg-ink text-white font-mono text-xs font-medium hover:bg-accent transition-colors">
+                                Start 3-Trial Reflex Test
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 bg-surface border border-hairline rounded-lg p-6 sm:p-10 flex flex-col justify-between min-h-[340px]">
+                        <div class="flex items-center justify-between border-b border-hairline pb-4">
+                            <span id="react-status" class="font-mono text-xs text-slate uppercase">3-Trial Sensorimotor Latency Test</span>
+                            <span id="react-last-ui" class="font-mono text-xs text-slate">Last Trial: -- ms</span>
+                        </div>
+
+                        <div class="my-auto py-4">
+                            <button id="react-pad" type="button" onclick="handleReactionClick()"
+                                class="w-full h-48 rounded-lg border border-hairline bg-canvas flex flex-col items-center justify-center p-6 transition-colors cursor-pointer select-none">
+                                <span id="react-pad-title" class="font-mono text-xl sm:text-2xl font-semibold text-ink">Click "Start 3-Trial Reflex Test"</span>
+                                <span id="react-pad-sub" class="text-xs text-slate mt-2 font-mono">Measures visual-to-motor reaction time in milliseconds</span>
+                            </button>
+                        </div>
+
+                        <div class="border-t border-hairline pt-4 flex justify-between text-xs font-mono text-slate">
+                            <span>Visual-motor pathway conduction speed</span>
+                            <span>Motor Cortex & Cerebellum</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 03: PERFORMANCE TABLE & BEST SCORES (#performance)
+             ===================================================================== -->
+        <section id="performance" class="py-16 border-b border-hairline">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-hairline">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-slate block">Section 03 / Score Calculation & Telemetry</span>
+                    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink mt-1">Performance Table & Best Scores</h2>
+                </div>
+                <button onclick="resetAllScores()" class="px-3.5 py-2 rounded-md border border-hairline bg-surface text-xs font-mono text-slate hover:text-ink hover:border-ink transition-colors">
+                    Reset Scores
+                </button>
+            </div>
+
+            <!-- Summary Strip: All 7 Games Best Scores + Total Sessions -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 pt-8">
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">01. Number Best</span>
+                    <div id="sum-num" class="font-mono text-base font-semibold text-ink mt-1">0 digits</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">02. Pattern Best</span>
+                    <div id="sum-pat" class="font-mono text-base font-semibold text-ink mt-1">Level 0</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">03. Card Match</span>
+                    <div id="sum-card" class="font-mono text-base font-semibold text-ink mt-1">-- moves</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">04. Word Recall</span>
+                    <div id="sum-word" class="font-mono text-base font-semibold text-ink mt-1">0 / 6</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">05. Stroop Best</span>
+                    <div id="sum-stroop" class="font-mono text-base font-semibold text-ink mt-1">0 / 10</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">06. Sequence</span>
+                    <div id="sum-chimp" class="font-mono text-base font-semibold text-ink mt-1">0 nums</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">07. Reaction</span>
+                    <div id="sum-react" class="font-mono text-base font-semibold text-accent mt-1">-- ms</div>
+                </div>
+                <div class="bg-surface border border-hairline rounded-lg p-3.5">
+                    <span class="font-mono text-[10px] text-slate uppercase block">Total Sessions</span>
+                    <div id="sum-sessions" class="font-mono text-base font-semibold text-ink mt-1">0</div>
+                </div>
+            </div>
+
+            <!-- Performance Log Table -->
+            <div class="mt-8 bg-surface border border-hairline rounded-lg p-6">
+                <div class="flex items-center justify-between pb-4 border-b border-hairline">
+                    <span class="font-mono text-xs uppercase text-slate">Session Performance Log</span>
+                    <span class="font-mono text-xs text-slate">Saved automatically in browser</span>
+                </div>
+                <div class="overflow-x-auto mt-3">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-hairline font-mono text-[11px] text-slate uppercase">
+                                <th class="py-3 pr-4">Game Name</th>
+                                <th class="py-3 px-4">Brain Skill Trained</th>
+                                <th class="py-3 px-4">Score / Result</th>
+                                <th class="py-3 pl-4 text-right">Time Played</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performance-table-body" class="divide-y divide-hairline text-xs font-mono">
+                            <tr>
+                                <td colspan="4" class="py-8 text-center text-slate font-sans">
+                                    No game sessions recorded yet. Play any of the 7 games above to populate your performance table.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 04: TEAM INFORMATION & PROJECT DETAILS (#team)
+             ===================================================================== -->
+        <section id="team" class="pt-16">
+            <div class="pb-6 border-b border-hairline">
+                <span class="font-mono text-xs uppercase tracking-widest text-slate block">Section 04 / Project & Contributors</span>
+                <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-ink mt-1">Team Information & Project Details</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
+                <!-- Left Column: About the Mini-Project -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="bg-surface border border-hairline rounded-lg p-6">
+                        <div class="font-mono text-xs uppercase text-accent font-semibold mb-2">About the Mini-Project</div>
+                        <p class="text-sm text-ink leading-relaxed">
+                            <strong>BrainBoost: Brain Health and Memory Training Website</strong> is an interdisciplinary mini-project connecting <strong>Biology (Neuroscience)</strong> with <strong>Computer Science (Web Development)</strong>.
+                        </p>
+                        <p class="text-sm text-slate leading-relaxed mt-3">
+                            The platform explains how neurons communicate and how memories are formed in clear, accessible language while providing 7 interactive browser exercises built with HTML, CSS, and JavaScript to train working memory, spatial recall, verbal recognition, selective attention, and reaction speed.
+                        </p>
+
+                        <div class="mt-5 pt-5 border-t border-hairline">
+                            <div class="font-mono text-xs uppercase text-slate mb-2.5">System Flow Methodology</div>
+                            <div class="font-mono text-xs text-ink bg-canvas p-3 rounded border border-hairline">
+                                User Input → Game Selection (1–7) → Display Challenge → User Response → Score Calculation → Performance Table
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Team Members Table -->
+                <div class="lg:col-span-6">
+                    <div class="bg-surface border border-hairline rounded-lg p-6">
+                        <div class="flex items-center justify-between pb-4 border-b border-hairline">
+                            <span class="font-mono text-xs uppercase text-accent font-semibold">Project Team Members</span>
+                            <span class="font-mono text-xs text-slate">6 Members</span>
+                        </div>
+
+                        <table class="w-full text-left border-collapse mt-2">
+                            <thead>
+                                <tr class="border-b border-hairline font-mono text-[11px] text-slate uppercase">
+                                    <th class="py-2.5">Student Name</th>
+                                    <th class="py-2.5 text-right">University Seat Number (USN)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-hairline text-sm">
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">Shanmukha</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL149</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">Nandan Gowda</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL164</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">Monish Kandanuru</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL155</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">Parameshwar Sahoo</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL181</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">P. Rohith</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL184</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-medium text-ink">Mohammad Hashim</td>
+                                    <td class="py-3 text-right font-mono text-xs text-slate">25BTRCL066</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Minimal Footer -->
+    <footer class="border-t border-hairline bg-surface py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate font-mono">
+            <div>BrainBoost — Brain Health & Memory Training Website</div>
+            <div>01. Intro · 02. 7 Memory Games · 03. Performance · 04. Team Info</div>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         JAVASCRIPT ENGINE FOR ALL 7 GAMES & TELEMETRY TABLE
+         ===================================================================== -->
+    <script>
+        lucide.createIcons();
+
+        /* ---------------------------------------------------------------------
+           LOCALSTORAGE STATE & PERFORMANCE LOGGING
+           --------------------------------------------------------------------- */
+        const STORAGE_KEY = 'brainboost_v2_7games';
+
+        function getStats() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return {
+                numBest: 0,
+                patBest: 0,
+                cardBest: null,
+                wordBest: 0,
+                stroopBest: 0,
+                chimpBest: 0,
+                reactBest: null,
+                sessions: 0,
+                logs: []
+            };
+        }
+
+        function saveStats(data) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {}
+            renderPerformanceUI();
+        }
+
+        function logGameSession(gameName, skillTrained, resultText, updateFn) {
+            const data = getStats();
+            data.sessions += 1;
+            if (updateFn) updateFn(data);
+
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            data.logs.unshift({
+                game: gameName,
+                skill: skillTrained,
+                result: resultText,
+                time: timeStr
+            });
+            data.logs = data.logs.slice(0, 12);
+            saveStats(data);
+        }
+
+        function renderPerformanceUI() {
+            const data = getStats();
+            document.getElementById('nav-sessions-count').textContent = data.sessions;
+
+            // Update Summary Strip
+            document.getElementById('sum-num').textContent = `${data.numBest} digits`;
+            document.getElementById('sum-pat').textContent = `Level ${data.patBest}`;
+            document.getElementById('sum-card').textContent = data.cardBest ? `${data.cardBest} moves` : '-- moves';
+            document.getElementById('sum-word').textContent = `${data.wordBest} / 6`;
+            document.getElementById('sum-stroop').textContent = `${data.stroopBest} / 10`;
+            document.getElementById('sum-chimp').textContent = `${data.chimpBest} nums`;
+            document.getElementById('sum-react').textContent = data.reactBest ? `${data.reactBest} ms` : '-- ms';
+            document.getElementById('sum-sessions').textContent = data.sessions;
+
+            // Update In-Game Best Badges
+            document.getElementById('num-best-ui').textContent = `${data.numBest} digits`;
+            document.getElementById('pat-best-ui').textContent = `Level ${data.patBest}`;
+            document.getElementById('word-best-ui').textContent = `${data.wordBest} / 6`;
+            document.getElementById('chimp-best-ui').textContent = data.chimpBest;
+            document.getElementById('react-best-ui').textContent = data.reactBest ? `${data.reactBest} ms` : '-- ms';
+
+            // Update Log Table
+            const tbody = document.getElementById('performance-table-body');
+            if (data.logs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate font-sans">No game sessions recorded yet. Play any of the 7 games above to populate your performance table.</td></tr>`;
+            } else {
+                tbody.innerHTML = data.logs.map(row => `
+                    <tr>
+                        <td class="py-3 pr-4 font-semibold text-ink">${row.game}</td>
+                        <td class="py-3 px-4 text-slate">${row.skill}</td>
+                        <td class="py-3 px-4 text-accent font-semibold">${row.result}</td>
+                        <td class="py-3 pl-4 text-right text-slate">${row.time}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function resetAllScores() {
+            localStorage.removeItem(STORAGE_KEY);
+            renderPerformanceUI();
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME TAB SWITCHER (ALL 7 GAMES)
+           --------------------------------------------------------------------- */
+        const ALL_TABS = ['number', 'pattern', 'cards', 'words', 'stroop', 'chimp', 'reaction'];
+
+        function switchGameTab(tabId) {
+            ALL_TABS.forEach(id => {
+                const panel = document.getElementById(`game-panel-${id}`);
+                const btn = document.getElementById(`tab-btn-${id}`);
+                if (id === tabId) {
+                    panel.classList.remove('hidden');
+                    btn.className = "game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-ink text-white border border-ink transition-all";
+                } else {
+                    panel.classList.add('hidden');
+                    btn.className = "game-tab-btn px-3.5 py-2 rounded-md text-xs font-mono font-medium bg-surface text-slate border border-hairline hover:text-ink hover:border-ink transition-all";
+                }
+            });
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 01: NUMBER MEMORY
+           --------------------------------------------------------------------- */
+        let numLevel = 1;
+        let numTarget = '';
+
+        function startNumberGame() {
+            const len = numLevel + 2;
+            numTarget = '';
+            for (let i = 0; i < len; i++) {
+                numTarget += Math.floor(Math.random() * 10);
+            }
+
+            document.getElementById('num-level-ui').textContent = `Level ${numLevel} (${len}d)`;
+            document.getElementById('num-status').textContent = `Memorize ${len} digits...`;
+            document.getElementById('num-box').textContent = numTarget;
+            document.getElementById('num-input-wrap').classList.add('hidden');
+            document.getElementById('num-start-btn').classList.add('hidden');
+
+            setTimeout(() => {
+                document.getElementById('num-box').textContent = '• '.repeat(len).trim();
+                document.getElementById('num-status').textContent = 'Type the exact digits from memory';
+                const wrap = document.getElementById('num-input-wrap');
+                wrap.classList.remove('hidden');
+                const inp = document.getElementById('num-input');
+                inp.value = '';
+                inp.focus();
+            }, 1600 + numLevel * 300);
+        }
+
+        document.getElementById('num-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') verifyNumberGame();
+        });
+
+        function verifyNumberGame() {
+            const val = document.getElementById('num-input').value.trim();
+            const len = numTarget.length;
+            document.getElementById('num-input-wrap').classList.add('hidden');
+            const startBtn = document.getElementById('num-start-btn');
+            startBtn.classList.remove('hidden');
+
+            if (val === numTarget) {
+                logGameSession('01. Number Memory', 'Working Memory (Prefrontal)', `${len} Digits Recalled`, d => {
+                    if (len > d.numBest) d.numBest = len;
+                });
+                numLevel += 1;
+                document.getElementById('num-box').textContent = 'Correct!';
+                document.getElementById('num-status').textContent = `Sequence ${numTarget} verified`;
+                startBtn.textContent = `Continue to Level ${numLevel} (${numLevel + 2} Digits)`;
+            } else {
+                logGameSession('01. Number Memory', 'Working Memory (Prefrontal)', `Stopped at ${len} Digits`);
+                document.getElementById('num-box').textContent = numTarget;
+                document.getElementById('num-status').textContent = `Mismatch (You typed: ${val || 'none'}). Resetting to Level 1`;
+                numLevel = 1;
+                startBtn.textContent = 'Try Again (Level 1)';
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 02: PATTERN MATRIX
+           --------------------------------------------------------------------- */
+        let patLevel = 1;
+        let patTargets = [];
+        let patPicked = [];
+        let patActive = false;
+
+        function buildPatternGrid() {
+            const grid = document.getElementById('pat-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 16; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'game-cell w-full h-full rounded-md border border-hairline bg-canvas hover:border-ink';
+                btn.onclick = () => clickPatternTile(i, btn);
+                grid.appendChild(btn);
+            }
+        }
+
+        function startPatternGame() {
+            patActive = false;
+            patPicked = [];
+            patTargets = [];
+            const count = Math.min(2 + patLevel, 9);
+            document.getElementById('pat-level-ui').textContent = `${patLevel} (${count} Tiles)`;
+            document.getElementById('pat-status').textContent = 'Watch highlighted tiles...';
+
+            while (patTargets.length < count) {
+                const r = Math.floor(Math.random() * 16);
+                if (!patTargets.includes(r)) patTargets.push(r);
+            }
+
+            buildPatternGrid();
+            const cells = document.querySelectorAll('#pat-grid button');
+            patTargets.forEach(idx => {
+                cells[idx].className = 'game-cell w-full h-full rounded-md border border-accent bg-accent';
+            });
+
+            setTimeout(() => {
+                cells.forEach(c => {
+                    c.className = 'game-cell w-full h-full rounded-md border border-hairline bg-canvas hover:border-ink';
+                });
+                patActive = true;
+                document.getElementById('pat-status').textContent = `Click the ${count} tiles from memory`;
+            }, 1200);
+        }
+
+        function clickPatternTile(idx, btn) {
+            if (!patActive || patPicked.includes(idx)) return;
+            patPicked.push(idx);
+
+            if (patTargets.includes(idx)) {
+                btn.className = 'game-cell w-full h-full rounded-md border border-ink bg-ink';
+                if (patPicked.length === patTargets.length) {
+                    patActive = false;
+                    const cleared = patLevel;
+                    logGameSession('02. Pattern Matrix', 'Spatial Recall (Parietal)', `Level ${cleared} (${patTargets.length} Tiles)`, d => {
+                        if (cleared > d.patBest) d.patBest = cleared;
+                    });
+                    patLevel += 1;
+                    document.getElementById('pat-status').textContent = `Level ${cleared} Cleared! Loading next level...`;
+                    setTimeout(startPatternGame, 900);
+                }
+            } else {
+                patActive = false;
+                btn.className = 'game-cell w-full h-full rounded-md border border-red-600 bg-red-100';
+                logGameSession('02. Pattern Matrix', 'Spatial Recall (Parietal)', `Missed at Level ${patLevel}`);
+                document.getElementById('pat-status').textContent = 'Missed tile! Click "Start Pattern Matrix" to replay from Level 1.';
+                patLevel = 1;
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 03: SYNAPSE CARD MATCH
+           --------------------------------------------------------------------- */
+        const CARD_PAIRS = [
+            { id: 1, text: 'Neuron' }, { id: 1, text: 'Nerve Cell' },
+            { id: 2, text: 'Synapse' }, { id: 2, text: 'Signal Gap' },
+            { id: 3, text: 'Hippocampus' }, { id: 3, text: 'Saves Memory' },
+            { id: 4, text: 'Frontal Lobe' }, { id: 4, text: 'Focus & Logic' },
+            { id: 5, text: 'Occipital' }, { id: 5, text: 'Vision Center' },
+            { id: 6, text: 'Cerebellum' }, { id: 6, text: 'Balance & Reflex' }
+        ];
+        let cardDeck = [];
+        let cardFlipped = [];
+        let cardMatched = 0;
+        let cardMoves = 0;
+        let cardLocked = false;
+
+        function initCardGame() {
+            cardDeck = [...CARD_PAIRS].sort(() => Math.random() - 0.5).map(c => ({ ...c, done: false }));
+            cardFlipped = [];
+            cardMatched = 0;
+            cardMoves = 0;
+            cardLocked = false;
+            document.getElementById('card-moves-ui').textContent = '0';
+            document.getElementById('card-pairs-ui').textContent = '0 / 6';
+            document.getElementById('card-status').textContent = 'Match each brain part with its plain-English job';
+            renderCards();
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('card-grid');
+            grid.innerHTML = '';
+            cardDeck.forEach((c, i) => {
+                const open = cardFlipped.includes(i) || c.done;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => flipCard(i);
+                if (c.done) {
+                    btn.className = 'game-cell h-20 rounded-md border border-accent bg-accentSoft text-accent font-mono text-xs font-semibold p-2';
+                    btn.textContent = c.text;
+                } else if (open) {
+                    btn.className = 'game-cell h-20 rounded-md border border-ink bg-surface text-ink font-mono text-xs font-semibold p-2';
+                    btn.textContent = c.text;
+                } else {
+                    btn.className = 'game-cell h-20 rounded-md border border-hairline bg-canvas hover:border-ink text-muted font-mono text-xs';
+                    btn.textContent = '?';
+                }
+                grid.appendChild(btn);
+            });
+        }
+
+        function flipCard(idx) {
+            if (cardLocked || cardFlipped.includes(idx) || cardDeck[idx].done) return;
+            cardFlipped.push(idx);
+            renderCards();
+
+            if (cardFlipped.length === 2) {
+                cardMoves += 1;
+                document.getElementById('card-moves-ui').textContent = cardMoves;
+                const [a, b] = cardFlipped;
+                if (cardDeck[a].id === cardDeck[b].id) {
+                    cardDeck[a].done = true;
+                    cardDeck[b].done = true;
+                    cardFlipped = [];
+                    cardMatched += 1;
+                    document.getElementById('card-pairs-ui').textContent = `${cardMatched} / 6`;
+                    renderCards();
+                    if (cardMatched === 6) {
+                        document.getElementById('card-status').textContent = `Completed all 6 pairs in ${cardMoves} moves!`;
+                        logGameSession('03. Synapse Card Match', 'Associative Memory (Temporal)', `${cardMoves} Moves`, d => {
+                            if (!d.cardBest || cardMoves < d.cardBest) d.cardBest = cardMoves;
+                        });
+                    }
+                } else {
+                    cardLocked = true;
+                    setTimeout(() => {
+                        cardFlipped = [];
+                        cardLocked = false;
+                        renderCards();
+                    }, 700);
+                }
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 04 [NEW]: WORD RECALL (Verbal Episodic Memory)
+           --------------------------------------------------------------------- */
+        const WORD_BANK = [
+            'RIVER', 'PLANET', 'FOREST', 'BRIDGE', 'GARDEN', 'WINDOW',
+            'MIRROR', 'CANDLE', 'OCEAN', 'PENCIL', 'ROCKET', 'CASTLE',
+            'TUNNEL', 'ISLAND', 'DESERT', 'GUITAR', 'BASKET', 'SILVER'
+        ];
+        let targetWords = [];
+        let pickedWords = [];
+        let wordGameActive = false;
+
+        function startWordGame() {
+            const shuffled = [...WORD_BANK].sort(() => Math.random() - 0.5);
+            targetWords = shuffled.slice(0, 6);
+            const distractors = shuffled.slice(6, 12);
+            const pool = [...targetWords, ...distractors].sort(() => Math.random() - 0.5);
+            pickedWords = [];
+            wordGameActive = false;
+
+            document.getElementById('word-found-ui').textContent = '0 / 6';
+            document.getElementById('word-status').textContent = 'Study these 6 words for 5 seconds...';
+
+            const stage = document.getElementById('word-stage');
+            stage.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="font-mono text-xs text-accent uppercase">Memorize These 6 Words</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md mx-auto">
+                        ${targetWords.map(w => `<div class="p-3 rounded-md border border-ink bg-canvas font-mono text-sm font-semibold text-ink">${w}</div>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                wordGameActive = true;
+                document.getElementById('word-status').textContent = 'Click the 6 words that were on the list (6 clicks total)';
+                stage.innerHTML = `
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-w-lg mx-auto" id="word-pool-grid">
+                        ${pool.map(w => `<button type="button" onclick="pickWord('${w}', this)" class=" py-3 px-2 rounded-md border border-hairline bg-canvas hover:border-ink font-mono text-xs font-medium text-ink transition-all">${w}</button>`).join('')}
+                    </div>
+                `;
+            }, 5000);
+        }
+
+        function pickWord(word, btnEl) {
+            if (!wordGameActive || pickedWords.includes(word)) return;
+            pickedWords.push(word);
+
+            const isCorrect = targetWords.includes(word);
+            if (isCorrect) {
+                btnEl.className = 'py-3 px-2 rounded-md border border-accent bg-accentSoft font-mono text-xs font-semibold text-accent';
+            } else {
+                btnEl.className = 'py-3 px-2 rounded-md border border-red-500 bg-red-50 font-mono text-xs font-semibold text-red-600';
+            }
+
+            const correctCount = pickedWords.filter(w => targetWords.includes(w)).length;
+            document.getElementById('word-found-ui').textContent = `${correctCount} / 6`;
+
+            if (pickedWords.length === 6) {
+                wordGameActive = false;
+                document.getElementById('word-status').textContent = `Round Finished: You recalled ${correctCount} out of 6 words!`;
+                logGameSession('04. Word Recall', 'Verbal Memory (Left Temporal)', `${correctCount} / 6 Words`, d => {
+                    if (correctCount > d.wordBest) d.wordBest = correctCount;
+                });
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 05 [NEW]: STROOP COLOR FOCUS (Selective Attention)
+           --------------------------------------------------------------------- */
+        const STROOP_COLORS = [
+            { name: 'RED', hex: '#DC2626' },
+            { name: 'BLUE', hex: '#2563EB' },
+            { name: 'GREEN', hex: '#059669' },
+            { name: 'AMBER', hex: '#D97706' }
+        ];
+        let stroopRound = 0;
+        let stroopScore = 0;
+        let stroopCurrentInk = '';
+        let stroopStartTimestamp = 0;
+        let stroopTotalTime = 0;
+        let stroopActive = false;
+
+        function startStroopGame() {
+            stroopRound = 0;
+            stroopScore = 0;
+            stroopTotalTime = 0;
+            stroopActive = true;
+            nextStroopRound();
+        }
+
+        function nextStroopRound() {
+            if (stroopRound >= 10) {
+                stroopActive = false;
+                const avgMs = Math.round(stroopTotalTime / 10);
+                document.getElementById('stroop-word-box').textContent = `${stroopScore}/10`;
+                document.getElementById('stroop-word-box').style.color = '#111827';
+                document.getElementById('stroop-status').textContent = `Done! Score: ${stroopScore}/10 (Avg ${avgMs} ms)`;
+                document.getElementById('stroop-avg-ui').textContent = `Avg Speed: ${avgMs} ms`;
+                logGameSession('05. Stroop Color Focus', 'Selective Attention (Frontal)', `${stroopScore}/10 (${avgMs} ms)`, d => {
+                    if (stroopScore > d.stroopBest) d.stroopBest = stroopScore;
+                });
+                return;
+            }
+
+            stroopRound += 1;
+            document.getElementById('stroop-round-ui').textContent = `${stroopRound} / 10`;
+            document.getElementById('stroop-score-ui').textContent = `${stroopScore} / 10`;
+
+            const wordObj = STROOP_COLORS[Math.floor(Math.random() * STROOP_COLORS.length)];
+            // Pick an ink color (frequently mismatched to create the Stroop effect)
+            const inkObj = STROOP_COLORS[Math.floor(Math.random() * STROOP_COLORS.length)];
+            stroopCurrentInk = inkObj.name;
+
+            const box = document.getElementById('stroop-word-box');
+            box.textContent = wordObj.name;
+            box.style.color = inkObj.hex;
+            stroopStartTimestamp = performance.now();
+        }
+
+        function answerStroop(chosenColor) {
+            if (!stroopActive) return;
+            const elapsed = performance.now() - stroopStartTimestamp;
+            stroopTotalTime += elapsed;
+
+            if (chosenColor === stroopCurrentInk) {
+                stroopScore += 1;
+            }
+            document.getElementById('stroop-score-ui').textContent = `${stroopScore} / 10`;
+            nextStroopRound();
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 06 [NEW]: SEQUENCE CHIMP TEST (Sequential Visual Working Memory)
+           --------------------------------------------------------------------- */
+        let chimpCount = 4;
+        let chimpPositions = {}; // cellIndex -> number
+        let chimpExpected = 1;
+        let chimpMasked = false;
+        let chimpPlaying = false;
+
+        function buildChimpGrid() {
+            const grid = document.getElementById('chimp-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 16; i++) {
+                const num = chimpPositions[i];
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                if (num && num >= chimpExpected) {
+                    if (chimpMasked) {
+                        btn.className = 'game-cell w-full h-full rounded-md border border-ink bg-ink text-transparent font-mono text-lg font-bold';
+                        btn.textContent = num;
+                    } else {
+                        btn.className = 'game-cell w-full h-full rounded-md border border-ink bg-surface text-ink font-mono text-lg font-bold hover:border-accent';
+                        btn.textContent = num;
+                    }
+                    btn.onclick = () => clickChimpTile(num);
+                } else {
+                    btn.className = 'game-cell w-full h-full rounded-md border border-hairline bg-canvas cursor-default';
+                }
+                grid.appendChild(btn);
+            }
+        }
+
+        function startChimpGame() {
+            chimpPositions = {};
+            chimpExpected = 1;
+            chimpMasked = false;
+            chimpPlaying = true;
+
+            document.getElementById('chimp-count-ui').textContent = chimpCount;
+            document.getElementById('chimp-status').textContent = `Memorize 1 to ${chimpCount}, then click 1`;
+
+            const cells = Array.from({ length: 16 }, (_, i) => i).sort(() => Math.random() - 0.5);
+            for (let n = 1; n <= chimpCount; n++) {
+                chimpPositions[cells[n - 1]] = n;
+            }
+            buildChimpGrid();
+        }
+
+        function clickChimpTile(num) {
+            if (!chimpPlaying) return;
+
+            if (num === chimpExpected) {
+                if (num === 1) {
+                    chimpMasked = true;
+                }
+                chimpExpected += 1;
+                buildChimpGrid();
+
+                if (chimpExpected > chimpCount) {
+                    chimpPlaying = false;
+                    const cleared = chimpCount;
+                    logGameSession('06. Sequence Chimp Test', 'Visual Working Memory', `${cleared} Numbers Ordered`, d => {
+                        if (cleared > d.chimpBest) d.chimpBest = cleared;
+                    });
+                    chimpCount = Math.min(12, chimpCount + 1);
+                    document.getElementById('chimp-status').textContent = `Cleared ${cleared} numbers! Next round: ${chimpCount} numbers...`;
+                    setTimeout(startChimpGame, 1000);
+                }
+            } else {
+                chimpPlaying = false;
+                chimpMasked = false;
+                buildChimpGrid();
+                logGameSession('06. Sequence Chimp Test', 'Visual Working Memory', `Stopped at ${chimpCount} Numbers`);
+                document.getElementById('chimp-status').textContent = `Wrong order (expected ${chimpExpected}). Resetting to 4 numbers.`;
+                chimpCount = 4;
+            }
+        }
+
+        /* ---------------------------------------------------------------------
+           GAME 07 [NEW]: NEURAL REACTION SPEED (Sensorimotor Reflex)
+           --------------------------------------------------------------------- */
+        let reactState = 'idle'; // idle | waiting | green
+        let reactTimeout = null;
+        let reactStartTime = 0;
+        let reactTrials = [];
+
+        function startReactionTest() {
+            reactTrials = [];
+            document.getElementById('react-trial-ui').textContent = '0 / 3';
+            queueNextReactionTrial();
+        }
+
+        function queueNextReactionTrial() {
+            if (reactTimeout) clearTimeout(reactTimeout);
+            reactState = 'waiting';
+            const pad = document.getElementById('react-pad');
+            pad.className = 'w-full h-48 rounded-lg border border-ink bg-subtle flex flex-col items-center justify-center p-6 transition-colors cursor-pointer select-none';
+            document.getElementById('react-pad-title').textContent = 'Wait for Green...';
+            document.getElementById('react-pad-sub').textContent = `Trial ${reactTrials.length + 1} of 3 — Do not click yet`;
+
+            const delay = 1500 + Math.random() * 2300;
+            reactTimeout = setTimeout(() => {
+                reactState = 'green';
+                reactStartTime = performance.now();
+                pad.className = 'w-full h-48 rounded-lg border border-emerald-600 bg-emerald-500 text-white flex flex-col items-center justify-center p-6 transition-colors cursor-pointer select-none';
+                document.getElementById('react-pad-title').className = 'font-mono text-2xl font-bold text-white';
+                document.getElementById('react-pad-title').textContent = 'CLICK NOW!';
+                document.getElementById('react-pad-sub').className = 'text-xs text-white/90 mt-2 font-mono';
+                document.getElementById('react-pad-sub').textContent = 'Click as fast as you can';
+            }, delay);
+        }
+
+        function handleReactionClick() {
+            const pad = document.getElementById('react-pad');
+            const title = document.getElementById('react-pad-title');
+            const sub = document.getElementById('react-pad-sub');
+
+            if (reactState === 'idle') {
+                startReactionTest();
+                return;
+            }
+
+            if (reactState === 'waiting') {
+                clearTimeout(reactTimeout);
+                reactState = 'idle';
+                pad.className = 'w-full h-48 rounded-lg border border-red-500 bg-red-50 flex flex-col items-center justify-center p-6 transition-colors cursor-pointer select-none';
+                title.className = 'font-mono text-xl font-semibold text-red-600';
+                title.textContent = 'Too Early!';
+                sub.className = 'text-xs text-red-500 mt-2 font-mono';
+                sub.textContent = 'Click here to retry this trial';
+                return;
+            }
+
+            if (reactState === 'green') {
+                const ms = Math.round(performance.now() - reactStartTime);
+                reactTrials.push(ms);
+                document.getElementById('react-trial-ui').textContent = `${reactTrials.length} / 3`;
+                document.getElementById('react-last-ui').textContent = `Last Trial: ${ms} ms`;
+
+                title.className = 'font-mono text-xl sm:text-2xl font-semibold text-ink';
+                sub.className = 'text-xs text-slate mt-2 font-mono';
+                pad.className = 'w-full h-48 rounded-lg border border-hairline bg-canvas flex flex-col items-center justify-center p-6 transition-colors cursor-pointer select-none';
+
+                if (reactTrials.length < 3) {
+                    reactState = 'waiting';
+                    title.textContent = `${ms} ms! Get ready for next trial...`;
+                    sub.textContent = `Completed ${reactTrials.length} of 3 trials`;
+                    setTimeout(queueNextReactionTrial, 1000);
+                } else {
+                    reactState = 'idle';
+                    const avg = Math.round(reactTrials.reduce((a, b) => a + b, 0) / 3);
+                    title.textContent = `Average Speed: ${avg} ms`;
+                    sub.textContent = `Trials: ${reactTrials.join(' ms, ')} ms — Click to run again`;
+                    logGameSession('07. Neural Reaction Speed', 'Sensorimotor Reflex (Motor Cortex)', `${avg} ms Avg`, d => {
+                        if (!d.reactBest || avg < d.reactBest) d.reactBest = avg;
+                    });
+                }
+            }
+        }
+
+        // Initialize Default Grids & Saved Telemetry on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            buildPatternGrid();
+            initCardGame();
+            chimpCount = 4;
+            startChimpGame();
+            renderPerformanceUI();
+        });
+    </script>
+</body>
+</html>
